@@ -1,0 +1,61 @@
+version: '3.4'
+
+services:
+  mc1:
+    image: itzg/minecraft-bedrock-server
+    container_name: minecraft1
+    networks:
+      mcvlan:
+        ipv4_address: 192.168.1.101          # these will act as fixed IP-addresses visible to your router. Choose something that doesn't exist.
+    mac_address: f1:3a:60:36:9e:84           # mac address can be random, search for a random mac generator
+    environment:                             # see itzg/minecraft-bedrock-server documentation for environment variables
+      EULA: "TRUE"
+      SERVER_NAME: Minecraft1
+      LEVEL_NAME: Minecraft1
+      GAMEMODE: survival
+      DIFFICULTY: peaceful
+      LEVEL_SEED: "123"
+      ALLOW_CHEATS: "false"
+      MAX_PLAYERS: "8"
+      DEFAULT_PLAYER_PERMISSION_LEVEL: operator
+    ports:
+      - 19132:19132/udp
+    volumes:
+      - ./minecraft1:/data                  # create a subfolder minecraft1, there the minecraft data folder will be linked
+    stdin_open: true
+    tty: true
+
+  mc2:
+    image: itzg/minecraft-bedrock-server
+    container_name: minecraft2
+    networks:
+      mcvlan:
+        ipv4_address: 192.168.1.102
+    mac_address: 16:23:0b:d3:f0:b9
+    environment:
+      EULA: "TRUE"
+      SERVER_NAME: Minecraft1
+      LEVEL_NAME: Minecraft1
+      GAMEMODE: survival
+      DIFFICULTY: peaceful
+      LEVEL_SEED: "123"
+      ALLOW_CHEATS: "false"
+      MAX_PLAYERS: "8"
+      DEFAULT_PLAYER_PERMISSION_LEVEL: operator
+    ports:
+      - 19132:19132/udp
+    volumes:
+      - ./minecraft1:/data
+    stdin_open: true
+    tty: true
+
+networks:
+  mcvlan:
+    driver: macvlan
+    driver_opts:
+      parent: eno1                    # use the name of your ethernet adapter here 
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
