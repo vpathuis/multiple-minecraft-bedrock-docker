@@ -1,4 +1,4 @@
-# Multiple minecraft bedrock docker
+# Multiple Minecraft Bedrock server using docker-compose
 Run multiple Minecraft Bedrock servers using Docker
 
 This is an addon to the Docker implementation by itzg enabling multiple Minecraft Bedrock servers, all on the default port (19132).
