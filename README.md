@@ -22,3 +22,9 @@ now use:
 `docker-compose up -d`
 
 If you want you can still make changes to the server.properties (Minecraft file), stop the containers, edit en rerun. 
+
+Upgrades of the minecraft server software require the following steps:
+1. docker-compose stop
+2. docker container prune
+3. sudo docker-compose up -d
+This rebuilds all the containers with the latest version.
